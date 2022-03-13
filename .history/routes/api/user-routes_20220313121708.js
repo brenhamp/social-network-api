@@ -23,7 +23,7 @@ router
   .put(updateUser)
   .delete(deleteUser);
 
-// /api/users/:id/friends/
+// /api/:id/friends/:friendsId
 router
   .route('/:id/friends/')
   .post(addFriend)
