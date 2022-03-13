@@ -38,18 +38,7 @@ const UserSchema = new Schema(
       virtuals: true,
       getters: true
     },
+    // prevents virtuals from creating duplicate of _id as `id`
     id: false
   }
 );
-
-//get user's number of friends
-UserSchema.virtual('friendCount').get(function() {
-    return this.friends.reduce(
-      (total, friend) => total + friend.length + 1,
-      0
-    );
-  });
-  
-  const User = model('User', UserSchema);
-  
-  module.exports = User;

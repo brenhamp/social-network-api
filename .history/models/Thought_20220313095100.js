@@ -45,13 +45,13 @@ const ReactionSchema = new Schema(
       }
   );
 
-ThoughtSchema.virtual('reactionCount').get(function() {
-return this.reactions.reduce(
-    (total, reaction) => total + reaction.length + 1,
-    0
-);
-});
-
-const Thought = model('Thought', ThoughtSchema);
-
-module.exports = Thought;
+  ThoughtSchema.virtual('friendCount').get(function() {
+    return this.friends.reduce(
+      (total, friend) => total + friend.length + 1,
+      0
+    );
+  });
+  
+  const Thought = model('Thought', ThoughtSchema);
+  
+  module.exports = Thought;

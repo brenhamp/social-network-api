@@ -42,14 +42,13 @@ const UserSchema = new Schema(
   }
 );
 
-//get user's number of friends
-UserSchema.virtual('friendCount').get(function() {
-    return this.friends.reduce(
-      (total, friend) => total + friend.length + 1,
+PizzaSchema.virtual('commentCount').get(function() {
+    return this.comments.reduce(
+      (total, comment) => total + comment.replies.length + 1,
       0
     );
   });
   
-  const User = model('User', UserSchema);
+  const Pizza = model('Pizza', PizzaSchema);
   
-  module.exports = User;
+  module.exports = Pizza;
