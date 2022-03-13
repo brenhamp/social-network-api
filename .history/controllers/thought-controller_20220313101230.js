@@ -1,18 +1,18 @@
-const { User, Thought } = require('../models');
+const { Thought } = require('../models');
 
-const userController = {
+const thoughtController = {
 
-    //GET all users
-    getAllUsers(req, res) {
-        User.find({})
-        .then(dbUserData => res.json(dbUserData))
+    //GET all thoughts
+    getAllThoughts(req, res) {
+        Thought.find({})
+        .then(dbThoughtData => res.json(dbThoughtData))
         .catch(err => {
             console.log(err);
             res.sendStatus(400);
         });
     },
 
-    //GET one user by id
+    //GET one thought by id
     getUserById({ params }, res) {
         User.findOne({ _id: params.id })
         .populate({
@@ -53,7 +53,6 @@ const userController = {
 
     deleteUser({ params }, res) {
         User.findOneAndDelete({ _id: params.id })
-        // Thought.findByIdAndDelete({_id: params.id})
         .then(dbUserData => res.json(dbUserData))
         .catch(err => res.json(err));
     }

@@ -1,4 +1,4 @@
-const { User, Thought } = require('../models');
+const { User } = require('../models');
 
 const userController = {
 
@@ -53,7 +53,7 @@ const userController = {
 
     deleteUser({ params }, res) {
         User.findOneAndDelete({ _id: params.id })
-        // Thought.findByIdAndDelete({_id: params.id})
+        Sweepstakes.remove({client_id: this._id}).exec();
         .then(dbUserData => res.json(dbUserData))
         .catch(err => res.json(err));
     }

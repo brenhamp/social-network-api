@@ -1,34 +1,34 @@
-const { User, Thought } = require('../models');
+const { Thought } = require('../models');
 
-const userController = {
+const thoughtController = {
 
-    //GET all users
-    getAllUsers(req, res) {
-        User.find({})
-        .then(dbUserData => res.json(dbUserData))
+    //GET all thoughts
+    getAllThoughts(req, res) {
+        Thought.find({})
+        .then(dbThoughtData => res.json(dbThoughtData))
         .catch(err => {
             console.log(err);
             res.sendStatus(400);
         });
     },
 
-    //GET one user by id
-    getUserById({ params }, res) {
-        User.findOne({ _id: params.id })
+    //GET one thought by id
+    getThoughtById({ params }, res) {
+        Thought.findOne({ _id: params.id })
         .populate({
             path: 'thoughts friends',
             select:' -__v'
         })
         .select('-__v')
         .sort({_id: -1})
-        .then(dbUserData => res.json(dbUserData))
+        .then(dbThoughtData => res.json(dbThoughtData))
         .catch(err => {
             console.log(err);
             res.sendStatus(400);
         });
     },
 
-    //POST new user
+    //POST new thought
     createUser({ body }, res) {
         User.create(body)
         .then(dbUserData => res.json(dbUserData))
@@ -53,7 +53,6 @@ const userController = {
 
     deleteUser({ params }, res) {
         User.findOneAndDelete({ _id: params.id })
-        // Thought.findByIdAndDelete({_id: params.id})
         .then(dbUserData => res.json(dbUserData))
         .catch(err => res.json(err));
     }

@@ -1,41 +1,55 @@
 const { User, Thought } = require('../models');
 
-const userController = {
+const thoughtController = {
 
-    //GET all users
-    getAllUsers(req, res) {
-        User.find({})
-        .then(dbUserData => res.json(dbUserData))
+    //GET all thoughts
+    getAllThoughts(req, res) {
+        Thought.find({})
+        .then(dbThoughtData => res.json(dbThoughtData))
         .catch(err => {
             console.log(err);
             res.sendStatus(400);
         });
     },
 
-    //GET one user by id
-    getUserById({ params }, res) {
-        User.findOne({ _id: params.id })
+    //GET one thought by id
+    getThoughtById({ params }, res) {
+        Thought.findOne({ _id: params.id })
         .populate({
             path: 'thoughts friends',
             select:' -__v'
         })
         .select('-__v')
         .sort({_id: -1})
-        .then(dbUserData => res.json(dbUserData))
+        .then(dbThoughtData => res.json(dbThoughtData))
         .catch(err => {
             console.log(err);
             res.sendStatus(400);
         });
     },
 
-    //POST new user
-    createUser({ body }, res) {
-        User.create(body)
-        .then(dbUserData => res.json(dbUserData))
-        .catch(err => res.json(err));
+    //POST new thought
+    addThought({ body }, res) {
+        Comment.create(body)
+      .then(({ _id }) => {
+        return User.findOneAndUpdate(
+          { _id: params.pizzaId },
+          { $push: { comments: _id } },
+          { new: true }
+        );
+      })
+      .then(dbPizzaData => {
+        console.log(dbPizzaData);
+        if (!dbPizzaData) {
+          res.status(404).json({ message: 'No pizza found with this id!' });
+          return;
+        }
+        res.json(dbPizzaData);
+      })
+      .catch(err => res.json(err));
     },
 
-    //PUT update user by id
+    //PUT update thought by id
     updateUser({ params, body }, res) {
         User.findOneAndUpdate
         ({ _id: params.id }, body, { new: true, runValidators: true })
@@ -53,7 +67,6 @@ const userController = {
 
     deleteUser({ params }, res) {
         User.findOneAndDelete({ _id: params.id })
-        // Thought.findByIdAndDelete({_id: params.id})
         .then(dbUserData => res.json(dbUserData))
         .catch(err => res.json(err));
     }

@@ -53,7 +53,7 @@ const userController = {
 
     deleteUser({ params }, res) {
         User.findOneAndDelete({ _id: params.id })
-        // Thought.findByIdAndDelete({_id: params.id})
+        Thought.findA({_id: this._id})
         .then(dbUserData => res.json(dbUserData))
         .catch(err => res.json(err));
     }
