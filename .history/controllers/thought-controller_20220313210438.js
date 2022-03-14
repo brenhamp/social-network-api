@@ -21,14 +21,11 @@ const thoughtController = {
         })
         .select('-__v')
         .sort({_id: -1})
-        .then((dbThoughtData => {
-            if (!dbThoughtData) {
-                res.status(404).json({ message: 'No hought found with this id!' });
-                return;
-            }
-            res.json(dbThoughtData)
-        }))
-        .catch(err => res.status(400).json(err));
+        .then(dbThoughtData => res.json(dbThoughtData))
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(400);
+        });
     },
 
     //POST new thought
