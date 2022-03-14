@@ -75,11 +75,11 @@ const userController = {
             .then(() => { 
                 Thought.deleteMany({ username: dbUserData.username })
                 .then(() => {
-                    res.json({ message: 'User has been deleted!' })
-                })   
+                    res.json({})
+                })
             })
+
         })
-        .catch(err => res.status(400).json(err))
     },
 
     //add friends

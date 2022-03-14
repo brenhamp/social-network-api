@@ -73,13 +73,10 @@ const userController = {
                 { $pull: { friends: params.id }}
             )
             .then(() => { 
-                Thought.deleteMany({ username: dbUserData.username })
-                .then(() => {
-                    res.json({ message: 'User has been deleted!' })
-                })   
+                Thought.deleteMany({ username: dbUserData})
             })
+
         })
-        .catch(err => res.status(400).json(err))
     },
 
     //add friends
