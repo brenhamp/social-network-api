@@ -69,17 +69,9 @@ const userController = {
                 return;
             }
             User.updateMany(
-                { _id: { $in: dbUserData.friends} },
-                { $pull: { friends: params.id }}
+                { _id: { $in: db}}
             )
-            .then(() => { 
-                Thought.deleteMany({ username: dbUserData.username })
-                .then(() => {
-                    res.json({ message: 'User has been deleted!' })
-                })   
-            })
         })
-        .catch(err => res.status(400).json(err))
     },
 
     //add friends
